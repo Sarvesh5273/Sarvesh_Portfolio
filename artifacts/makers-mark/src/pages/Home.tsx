@@ -23,19 +23,16 @@ gsap.registerPlugin(ScrollTrigger);
  */
 const loaders = {
   kingdom: () => import('@/components/kingdom/KingdomAct').then((m) => ({ default: m.KingdomAct })),
-  longAfter: () => import('@/components/long-after/LongAfterAct').then((m) => ({ default: m.LongAfterAct })),
   presentRoom: () => import('@/components/present-room/PresentRoomAct').then((m) => ({ default: m.PresentRoomAct })),
   coda: () => import('@/components/CodaAct').then((m) => ({ default: m.CodaAct })),
 };
 const KingdomAct = lazy(loaders.kingdom);
-const LongAfterAct = lazy(loaders.longAfter);
 const PresentRoomAct = lazy(loaders.presentRoom);
 const CodaAct = lazy(loaders.coda);
 
 const NEXT_ACT: Partial<Record<ActId, keyof typeof loaders>> = {
   unwritten: 'kingdom',
-  kingdom: 'longAfter',
-  longAfter: 'presentRoom',
+  kingdom: 'presentRoom',
   presentRoom: 'coda',
 };
 
@@ -43,7 +40,6 @@ const WORLD_BG: Record<ActId, string> = {
   prologue: '#FCFDFD',
   unwritten: '#D9D2C6',
   kingdom: '#14110e',
-  longAfter: '#10272D',
   presentRoom: '#DFCCAE',
   coda: '#FCFDFD',
 };
@@ -154,7 +150,7 @@ export function Home() {
             </div>
           );
         }
-        const Act = world.id === 'kingdom' ? KingdomAct : world.id === 'longAfter' ? LongAfterAct : PresentRoomAct;
+        const Act = world.id === 'kingdom' ? KingdomAct : PresentRoomAct;
         return (
           <div key={world.id} data-act-slot={world.id}>
             <Suspense fallback={fallback(WORLD_BG[world.id])}>

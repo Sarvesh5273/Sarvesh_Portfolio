@@ -107,7 +107,7 @@ export function KingdomAct() {
 
   const complete = () => {
     if (carved || refracting) return;
-    if (!beginDissolve('stone-glass', unlockNextAct)) return;
+    if (!beginDissolve('stone-paper', unlockNextAct)) return;
     setRefracting(true);
     window.setTimeout(() => setRefracting(false), 3600);
   };

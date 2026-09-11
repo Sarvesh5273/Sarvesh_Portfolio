@@ -16,7 +16,7 @@ export interface VisitorState {
   setActiveAct: (act: ActId) => void;
 }
 
-const ACT_ORDER: ActId[] = ['prologue', 'unwritten', 'kingdom', 'longAfter', 'presentRoom', 'coda'];
+const ACT_ORDER: ActId[] = ['prologue', 'unwritten', 'kingdom', 'presentRoom', 'coda'];
 
 const DOORWAY_KEY = 'makers-mark:doorway';
 
@@ -37,7 +37,6 @@ export function VisitorProvider({ children }: { children: ReactNode }) {
     prologue: null,
     unwritten: null,
     kingdom: null,
-    longAfter: null,
     presentRoom: null,
     coda: null,
   });

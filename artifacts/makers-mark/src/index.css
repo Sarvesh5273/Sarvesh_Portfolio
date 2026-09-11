@@ -89,13 +89,6 @@
   --world-font: var(--app-font-serif);
 }
 
-[data-world="longAfter"] {
-  --world-bg: #09090B;
-  --world-fg: #E2E8F0;
-  --world-accent: #FB7185; /* Rose */
-  --world-font: var(--app-font-mono);
-}
-
 [data-world="presentRoom"] {
   --world-bg: #F5F5F4;
   --world-fg: #292524;
@@ -110,7 +103,6 @@
   visibility: hidden;
 }
 
-/* The Long After: text etched into glass, lit from behind. */
 .la-etch {
   font-family: var(--app-font-mono);
   font-weight: 300;

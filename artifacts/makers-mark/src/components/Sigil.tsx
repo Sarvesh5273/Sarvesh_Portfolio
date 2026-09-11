@@ -11,7 +11,6 @@ const TONE: Record<ActId, string> = {
   prologue: 'grayscale(1) brightness(0.9) opacity(0.7)',
   unwritten: 'grayscale(1) brightness(1.35) contrast(0.7) blur(0.6px) opacity(0.55)',
   kingdom: 'sepia(0.6) saturate(1.3) brightness(0.95) drop-shadow(0 2px 6px rgba(0,0,0,0.7))',
-  longAfter: 'grayscale(0.9) brightness(1.5) hue-rotate(190deg) saturate(1.8) drop-shadow(0 0 8px rgba(160,200,255,0.6))',
   presentRoom: 'saturate(1.05) drop-shadow(0 1px 2px rgba(0,0,0,0.25))',
   coda: 'saturate(1)',
 };

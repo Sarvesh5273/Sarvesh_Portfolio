@@ -7,7 +7,6 @@ import type { ActId } from '@/content/types';
  *
  *   unwritten    wind through nothing: slow, filtered noise
  *   kingdom      a low stone drone with a dripping vault
- *   longAfter    glass partials, faintly detuned, shimmering
  *   presentRoom  room tone: a quiet, warm hush
  *   prologue/coda silence
  */
@@ -18,7 +17,6 @@ const BED_LEVEL: Record<ActId, number> = {
   prologue: 0,
   unwritten: 0.5,
   kingdom: 0.6,
-  longAfter: 0.35,
   presentRoom: 0.22,
   coda: 0,
 };
@@ -126,34 +124,6 @@ function makeBed(ac: AudioContext, act: ActId): Bed {
       drone.stop();
       rumble.stop();
       l1.stop();
-    });
-  } else if (act === 'longAfter') {
-    const partials = [220, 329.6, 440, 554.4, 659.3];
-    const oscs = partials.map((f, i) => {
-      const o = ac.createOscillator();
-      o.type = 'sine';
-      o.frequency.value = f * (1 + (i % 2 ? 0.0015 : -0.001));
-      const g = ac.createGain();
-      g.gain.value = 0.05 / (i + 1);
-      const l = lfo(ac, 0.03 + i * 0.017, 0.03 / (i + 1), g.gain);
-      o.connect(g).connect(out);
-      o.start();
-      return () => {
-        o.stop();
-        l.stop();
-      };
-    });
-    const air = noiseSource(ac);
-    const airFilter = ac.createBiquadFilter();
-    airFilter.type = 'highpass';
-    airFilter.frequency.value = 5000;
-    const airGain = ac.createGain();
-    airGain.gain.value = 0.03;
-    air.connect(airFilter).connect(airGain).connect(out);
-    air.start();
-    stops.push(() => {
-      oscs.forEach((s) => s());
-      air.stop();
     });
   } else if (act === 'presentRoom') {
     const src = noiseSource(ac, true);

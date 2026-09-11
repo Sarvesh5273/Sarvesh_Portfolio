@@ -59,7 +59,8 @@ export function CodaAct() {
   const reveal = (delay = 0) =>
     reduced ? { className: '' } : { className: 'coda-reveal', style: { transitionDelay: `${delay}s` } };
 
-  const alsoBuilt = discoveries.filter((d) => d.world !== 'presentRoom' || d.id === 'reelgap' || d.id === 'stargap');
+  const codaDiscoveryIds = new Set(['reelgap', 'stargap', 'paperpilot', 'phantomops']);
+  const alsoBuilt = discoveries.filter((d) => d.world !== 'presentRoom' || codaDiscoveryIds.has(d.id));
   const doorway = getDoorway(chosenDoorway);
   const orderedStructures = doorway
     ? [...structures].sort((a, b) => Number(b.id === doorway.structure) - Number(a.id === doorway.structure))

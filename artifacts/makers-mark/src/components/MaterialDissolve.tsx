@@ -7,15 +7,13 @@ import { prefersReducedMotion } from '@/lib/scroll';
  * Each world-to-world crossing is a generated transition shot: one continuous
  * clip that begins in the leaving world's material and ends in the arriving one.
  *   fog-stone   the portal light resolves into the torchlit hall
- *   stone-glass the ancient arch emerges as a future viaduct through daylight
- *   glass-paper the filaments soften into morning light on a wooden desk
+ *   stone-paper the torchlit hall gives way to morning light on a wooden desk
  * The midpoint (next act unlocked, page travels) lands where the old material is gone.
  * Under reduced motion the clip is skipped for a plain colour crossfade.
  */
-const CLIPS: Record<DissolveKind, { src: string; webm?: boolean; mid: number; poster: string; tail: string }> = {
+const CLIPS: Record<DissolveKind, { src?: string; webm?: boolean; mid: number; poster: string; tail: string }> = {
   'fog-stone': { src: 'unwritten_to_kingdom', mid: 0.4, poster: '#F5EBD6', tail: '#14110e' },
-  'stone-glass': { src: 'stone_to_future', webm: true, mid: 0.5, poster: '#14110e', tail: '#10272D' },
-  'glass-paper': { src: 'future_to_room', webm: true, mid: 0.55, poster: '#10272D', tail: '#DFCCAE' },
+  'stone-paper': { mid: 0.5, poster: '#14110e', tail: '#DFCCAE' },
 };
 
 const TRAVEL_HOLD = 0.6;
@@ -52,7 +50,7 @@ export function MaterialDissolve() {
       onMid();
     };
 
-    if (reduced || !video) {
+    if (reduced || !clip.src || !video) {
       // Plain crossfade: cover, unlock at full cover, thin away.
       const tl = gsap.timeline({ onComplete: endDissolve });
       tl.fromTo(root, { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'power2.inOut' });
@@ -115,7 +113,7 @@ export function MaterialDissolve() {
       className="fixed inset-0 z-[60] pointer-events-none"
       style={{ backgroundColor: dissolve.phase === 'out' ? clip.tail : clip.poster }}
     >
-      {!reduced && (
+      {!reduced && clip.src && (
         <video
           ref={videoRef}
           className="absolute inset-0 h-full w-full object-cover"

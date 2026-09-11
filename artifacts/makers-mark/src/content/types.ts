@@ -1,11 +1,11 @@
 /**
  * Content model for The Maker's Mark.
  *
- * Every world renders the same four structures; each structure carries a
- * per-world representation. Only confirmable facts belong in `kingdom.ledger`.
+ * The three narrative worlds render the same four structures from different
+ * useful perspectives. Only confirmable facts belong in `kingdom.ledger`.
  */
 
-export type WorldId = 'unwritten' | 'kingdom' | 'longAfter' | 'presentRoom';
+export type WorldId = 'unwritten' | 'kingdom' | 'presentRoom';
 
 export type ActId = 'prologue' | WorldId | 'coda';
 
@@ -51,24 +51,6 @@ export interface StructureKingdom {
   hasUnfinishedCarving?: boolean;
 }
 
-export interface StructureLongAfter {
-  /** What the glass form is called in this world. */
-  title: string;
-  /** The consequence, at scale. */
-  consequence: string;
-  /** Number(s) the world counts. */
-  counters?: { label: string; value: number; suffix?: string }[];
-  /** Smaller filament nodes hanging off this structure. */
-  nodes?: { name: string; line: string; href?: string }[];
-  /** Gate: the chain shown when a ring is touched, oldest link first. */
-  trail?: string[];
-  /**
-   * Orchard: plain-language reasons, one per standing spot. `{doorway}` is
-   * replaced with the visitor's chosen doorway name.
-   */
-  why?: string[];
-}
-
 export interface StructurePresentRoom {
   /** The real name, finally. */
   name: string;
@@ -93,7 +75,6 @@ export interface Structure {
   storyName: string;
   unwritten: StructureUnwritten;
   kingdom: StructureKingdom;
-  longAfter: StructureLongAfter;
   presentRoom: StructurePresentRoom;
 }
 

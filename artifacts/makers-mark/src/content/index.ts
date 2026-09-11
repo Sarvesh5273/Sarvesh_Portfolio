@@ -28,16 +28,8 @@ export const worlds: WorldMeta[] = [
     transitionLabel: 'Complete the carving',
   },
   {
-    id: 'longAfter',
-    number: 3,
-    title: 'The Long After',
-    material: 'ceramic',
-    transitionAction: 'grab',
-    transitionLabel: 'Grab the filament',
-  },
-  {
     id: 'presentRoom',
-    number: 4,
+    number: 3,
     title: 'The Present Room',
     material: 'paper',
     transitionAction: 'read',
@@ -91,22 +83,6 @@ export const structures: Structure[] = [
         "A shopkeeper's ledger page pressed into the stone at the far end, like a fossil. Someone else's hands.",
       records: [
         'Imagine Cup 2026: Overall Semifinalist. Launch Track Finalist.',
-      ],
-    },
-    longAfter: {
-      title: 'The Lattice',
-      consequence:
-        'No longer a bridge. Thousands of thin spans from every direction converge on the same keystone. Each travelling light is a scan.',
-      counters: [
-        { label: 'cost per crossing', value: 0.0004, suffix: ' USD' },
-        { label: 'reduction in cost over four months', value: 93, suffix: '%' },
-        { label: 'scripts read', value: 3 },
-      ],
-      nodes: [
-        {
-          name: 'A shopfront',
-          line: 'Follow a single span outward and you arrive at a tiny shop that looks exactly like the fossil in the Kingdom.',
-        },
       ],
     },
     presentRoom: {
@@ -163,17 +139,6 @@ export const structures: Structure[] = [
       records: [],
       hasUnfinishedCarving: true,
     },
-    longAfter: {
-      title: 'The Still Lake',
-      consequence:
-        'The half-cut well is finished, and enormous. Not a well now but a still lake. Its surface shows your whole journey so far, in order. Stand still, and it notices how long you have been standing.',
-      nodes: [
-        {
-          name: 'The Companion',
-          line: 'A companion that holds a lifetime of context and reflects on it. This is what the carving grew into.',
-        },
-      ],
-    },
     presentRoom: {
       name: 'Cognitive AI Companion',
       description:
@@ -225,24 +190,6 @@ export const structures: Structure[] = [
         },
       ],
       evidence: 'In every hall, a ledger scroll on the floor: a record of every pass and every refusal.',
-    },
-    longAfter: {
-      title: 'The Rings',
-      consequence:
-        'The monumental arches carry smaller gates within them. Every filament passes through a ring of light before it continues. Touch a ring and it shows the chain of who asked what.',
-      nodes: [
-        {
-          name: 'ActionForge',
-          line: 'Natural language becomes a validated Splunk alert action, through a gate, with a trail.',
-          href: `${GH}/ActionForge`,
-        },
-      ],
-      trail: [
-        'An agent asked.',
-        'The ring asked back: which agent, which action, which scope, for how long.',
-        'A scoped consent was issued. It expired on time.',
-        'The pass was written to the ledger, beside every refusal.',
-      ],
     },
     presentRoom: {
       name: 'AegisFlow, GhostWire, TRACE',
@@ -297,18 +244,6 @@ export const structures: Structure[] = [
         },
       ],
       records: ['IIEST Shibpur Hackathon 2026: Second Runner Up.'],
-    },
-    longAfter: {
-      title: 'The Even Canopy',
-      consequence:
-        'A forest seen from below. Vast, but strangely even. No giant trees. Light reaches the floor everywhere. Stand in one spot and the canopy shows you why, in plain words, for you.',
-      why: [
-        'You are shown this spot because it resembles where you have already stood, and because you chose {doorway}. Nothing near it was allowed to grow tall enough to shade it.',
-        'You are shown this spot because it is popular, and also because it is true. The two were weighed against each other before you arrived.',
-        'You are shown this spot because it is not popular. The canopy keeps a share of the light for what few have visited, so the same few trees never take it all.',
-        'You are shown this spot because you can be told why. Every place the light reaches here can be explained in a sentence like this one.',
-        'You are shown this spot because you stood still long enough to ask. The smaller grove at the back reads fourteen signs the same even way.',
-      ],
     },
     presentRoom: {
       name: 'ReelSense',
@@ -384,8 +319,8 @@ export const discoveries: Discovery[] = [
   {
     id: 'paperpilot',
     name: 'PaperPilot',
-    world: 'longAfter',
-    line: 'A young, bright structure with no Kingdom ancestor. It went straight from imagination to here.',
+    world: 'presentRoom',
+    line: 'One of two small tools on the desk. A research studio built from imagination into something useful.',
     description:
       'An agent-native academic research studio. Built for the OpenAI WebMCP Challenge; live on Vercel.',
     href: `${GH}/PaperPilot`,
@@ -393,8 +328,8 @@ export const discoveries: Discovery[] = [
   {
     id: 'phantomops',
     name: 'PhantomOps',
-    world: 'longAfter',
-    line: 'A structure built by another builder, under the maker\'s direction.',
+    world: 'presentRoom',
+    line: 'One of two small tools on the desk. Built with an AI coding agent under the maker\'s direction.',
     description:
       'A public safety incident reporting platform, built entirely with Kiro AI for the Kiroween 2025 hackathon.',
     href: `${GH}/PhantomOps`,

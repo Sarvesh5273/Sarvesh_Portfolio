@@ -9,7 +9,7 @@ import type { ActId } from '@/content/types';
  * material in the same breath as the world does. The next act is unlocked at
  * the timeline's midpoint, once the old material is fully covered.
  */
-export type DissolveKind = 'fog-stone' | 'stone-glass' | 'glass-paper';
+export type DissolveKind = 'fog-stone' | 'stone-paper';
 
 export interface DissolveState {
   kind: DissolveKind;
@@ -23,8 +23,7 @@ export interface DissolveState {
 
 export const DISSOLVE_TARGET: Record<DissolveKind, { from: ActId; to: ActId }> = {
   'fog-stone': { from: 'unwritten', to: 'kingdom' },
-  'stone-glass': { from: 'kingdom', to: 'longAfter' },
-  'glass-paper': { from: 'longAfter', to: 'presentRoom' },
+  'stone-paper': { from: 'kingdom', to: 'presentRoom' },
 };
 
 let state: DissolveState | null = null;
