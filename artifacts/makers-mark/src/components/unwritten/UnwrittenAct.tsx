@@ -7,7 +7,8 @@ import { useVisitor } from '@/store/VisitorContext';
 import { prefersReducedMotion } from '@/lib/scroll';
 import { beginDissolve } from '@/lib/dissolve';
 import { DoorwayGlyph } from '@/components/DoorwayGlyph';
-import { FramePlate, type FramePlateHandle, posterUrl } from '@/components/FramePlate';
+import { posterUrl } from '@/components/FramePlate';
+import { ScrollVideoPlate, type ScrollVideoPlateHandle } from '@/components/ScrollVideoPlate';
 import { ENVIRONMENT_MEDIA } from '@/content/environment-media';
 import { UnwrittenStructure } from './UnwrittenStructure';
 import './unwritten.css';
@@ -16,9 +17,9 @@ const world = worlds.find((w) => w.id === 'unwritten')!;
 
 const FOG_BASE = '#D9D2C6';
 
-/** Frame sequence extracted from the regenerated full-bleed World 1 journey (16 fps). */
+/** Source imagery retained for the reduced-motion poster fallback. */
 const PLATE = ENVIRONMENT_MEDIA.unwritten.name;
-const PLATE_FRAMES = ENVIRONMENT_MEDIA.unwritten.count;
+const VIDEO = ENVIRONMENT_MEDIA.unwritten.video;
 /** Footage length in seconds; the timeline runs in the same units. */
 const FOOTAGE = ENVIRONMENT_MEDIA.unwritten.duration;
 /** The camera rests at the foot of the gate; the bright crossing belongs to the dissolve. */
@@ -39,7 +40,7 @@ const DECIDE_AT = 21.8;
  */
 export function UnwrittenAct() {
   const containerRef = useRef<HTMLElement>(null);
-  const plateRef = useRef<FramePlateHandle>(null);
+  const plateRef = useRef<ScrollVideoPlateHandle>(null);
   const { setActiveAct, recordEntry, unlockNextAct, unlockedActs, chosenDoorway } = useVisitor();
   const [reduced] = useState(prefersReducedMotion);
   const [condensing, setCondensing] = useState(false);
@@ -166,10 +167,11 @@ export function UnwrittenAct() {
       }}
     >
       {!reduced && (
-        <FramePlate
+        <ScrollVideoPlate
           ref={plateRef}
-          name={PLATE}
-          count={PLATE_FRAMES}
+          src={`${import.meta.env.BASE_URL}media/${VIDEO}`}
+          poster={posterUrl(PLATE)}
+          duration={FOOTAGE}
           className="absolute inset-0 h-full w-full"
           onBuffered={() => setPlateBuffered(true)}
         />
