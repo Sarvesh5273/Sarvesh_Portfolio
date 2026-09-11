@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;500;600&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+  --primary: 240 5.9% 10%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 240 10% 3.9%;
+  --radius: 0.5rem;
+  
+  --world-bg: #FFFFFF;
+  --world-fg: #111111;
+  --world-font: var(--app-font-sans);
+  --world-accent: #000000;
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 240 5.9% 10%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 240 4.9% 83.9%;
+}
+
+@theme inline {
+  --app-font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --app-font-serif: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --app-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --app-font-hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+  --app-font-inscription: "Cinzel", "Trajan Pro", "Cormorant Garamond", Georgia, serif;
+  
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+}
+
+/* Acts theme scoped to data-world */
+[data-world="prologue"], [data-world="coda"] {
+  --world-bg: #FCFDFD;
+  --world-fg: #0A0A0A;
+  --world-font: var(--app-font-sans);
+}
+
+[data-world="unwritten"] {
+  --world-bg: #EAECEB;
+  --world-fg: #3A3C3B;
+  --world-font: var(--app-font-sans);
+}
+
+[data-world="kingdom"] {
+  --world-bg: #14110e; /* umber, nearly black */
+  --world-fg: #d9cfbf; /* dust on stone */
+  --world-accent: #7fb8a4; /* verdigris */
+  --world-font: var(--app-font-serif);
+}
+
+[data-world="longAfter"] {
+  --world-bg: #09090B;
+  --world-fg: #E2E8F0;
+  --world-accent: #FB7185; /* Rose */
+  --world-font: var(--app-font-mono);
+}
+
+[data-world="presentRoom"] {
+  --world-bg: #F5F5F4;
+  --world-fg: #292524;
+  --world-accent: #4ade80;
+  --world-font: var(--app-font-sans);
+}
+
+.uw-body.is-sharp .uw-intent {
+  color: #232524;
+}
+.uw-frame[inert] {
+  visibility: hidden;
+}
+
+/* The Long After: text etched into glass, lit from behind. */
+.la-etch {
+  font-family: var(--app-font-mono);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: #DCE8FF;
+  text-shadow:
+    0 0 1px rgba(255, 255, 255, 0.9),
+    0 0 10px rgba(170, 200, 255, 0.45),
+    0 0 28px rgba(140, 180, 255, 0.25);
+}
+.la-etch-dim {
+  font-family: var(--app-font-mono);
+  color: rgba(220, 232, 255, 0.55);
+  text-shadow: 0 0 8px rgba(170, 200, 255, 0.25);
+}
+.la-frame[inert] {
+  visibility: hidden;
+}
+.la-tabular {
+  font-variant-numeric: tabular-nums;
+}
+@keyframes la-ring-breathe {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+.la-ring {
+  animation: la-ring-breathe 3.6s ease-in-out infinite;
+}
+@keyframes la-node-hang {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.la-hang {
+  animation: la-node-hang 7s ease-in-out infinite;
+}
+.la-grab-line {
+  cursor: grab;
+  touch-action: none;
+}
+.la-grab-line:active {
+  cursor: grabbing;
+}
+@media (prefers-reduced-motion: reduce) {
+  .la-ring,
+  .la-hang {
+    animation: none !important;
+  }
+}
+
+.noise-layer {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnPgogIDxmaWx0ZXIgaWQ9J24nIHg9JzAlJyB5PScwJScgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJSc+CiAgICA8ZmVUdXJidWxlbmNlIHR5cGU9J2ZyYWN0YWxOb2lzZScgYmFzZUZyZXF1ZW5jeT0nMC43NScgbnVtT2N0YXZlcz0nMycgc3RpdGNoVGlsZXM9J3N0aXRjaCcvPgogIDwvZmlsdGVyPgogIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbHRlcj0ndXJsKCNuKScgb3BhY2l0eT0nMC4yNScvPgo8L3N2Zz4=");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .noise-layer {
+    opacity: 0.1 !important;
+  }
+  .gsap-structure, .gsap-gate, .gsap-title {
+    opacity: 1 !important;
+    transform: none !important;
+    position: relative !important;
+    inset: auto !important;
+    pointer-events: auto !important;
+  }
+  .gsap-container {
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4rem !important;
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+}
+
+@layer base {
+  body {
+    @apply antialiased bg-background text-foreground;
+  }
+}
+/* ambient sound toggle: four small bars breathing while sound is on */
+@keyframes amb-bar {
+  0%, 100% { height: 3px; }
+  50% { height: 12px; }
+}
+.amb-bar {
+  animation: amb-bar 1.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .amb-bar { animation: none; height: 8px; }
+}
+
+/* Prologue: walking through the chosen doorway. */
+.pl-pass {
+  animation: pl-pass 2.4s cubic-bezier(.4, 0, .2, 1) forwards !important;
+  transform-origin: 50% 45%;
+  pointer-events: none;
+}
+@keyframes pl-pass {
+  0% { transform: translateY(-4px) scale(1); opacity: 1; }
+  55% { opacity: 1; }
+  100% { transform: translateY(6vh) scale(14); opacity: 0; }
+}
+.pl-fall {
+  animation: pl-fall 1.6s ease-in forwards !important;
+  pointer-events: none;
+}
+@keyframes pl-fall {
+  to { transform: translateY(24px) scale(.86); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pl-pass, .pl-fall { animation: none !important; }
+}
+
+/* Prologue arrival fade (replaces a motion library for two elements). */
+.pl-fade {
+  opacity: 0;
+  animation: pl-fade 1.8s ease-out forwards;
+}
+@keyframes pl-fade {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Coda reveal-on-scroll: revealed once by an IntersectionObserver. */
+.coda-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.coda-reveal[data-revealed] {
+  opacity: 1;
+  transform: none;
+}

@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "The Maker's Mark"
+description = "Sarvesh Bijawe's developer portfolio as a single-page, scroll-based storytelling experience. The visitor travels through four parallel realities (The Unwritten, The Buried Kingdom, The Long After, The Present Room) discovering the same four projects built in each world's material idiom, ending in a plain conventional portfolio page for recruiters."
+version = "1.0.0"
+id = "artifacts/makers-mark"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19812
+
+[services.development]
+run = "pnpm --filter @workspace/makers-mark run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/makers-mark", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/makers-mark/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19812"
+BASE_PATH = "/"

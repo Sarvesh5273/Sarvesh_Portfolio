@@ -1,0 +1,10 @@
+artifacts/makers-mark/gen/video/unwritten_journey.mp4 filter=lfs diff=lfs merge=lfs -text
+artifacts/makers-mark/gen/video/uw5_orchard.mp4 filter=lfs diff=lfs merge=lfs -text
+.canvas/assets/ai-video-4a60b5a6-63b6-4797-a241-d6d4894e1132-1.mp4 filter=lfs diff=lfs merge=lfs -text
+artifacts/makers-mark/gen/video/future_journey.mp4 filter=lfs diff=lfs merge=lfs -text
+artifacts/makers-mark/gen/video/unwritten_journey_v3.mp4 filter=lfs diff=lfs merge=lfs -text
+attached_assets/.World_1_B_1788707694047.zip.G2ahgKL4gNilCxlZPPlJW~ filter=lfs diff=lfs merge=lfs -text
+attached_assets/World_1_A_1788707188104.zip filter=lfs diff=lfs merge=lfs -text
+attached_assets/World_1_B_1788707694047.zip filter=lfs diff=lfs merge=lfs -text
+attached_assets/World_1_C_1788707699776.zip filter=lfs diff=lfs merge=lfs -text
+artifacts/makers-mark/public/media/** filter=lfs diff=lfs merge=lfs -text

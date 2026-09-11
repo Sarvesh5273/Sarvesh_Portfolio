@@ -1,0 +1,57 @@
+.la-text-ceramic {
+  color: #FAFCFF;
+}
+
+.la-text-titanium {
+  color: #A2ACB8;
+}
+
+.la-text-filament {
+  color: #40E0D0;
+}
+
+.la-bg-filament {
+  background-color: #40E0D0;
+}
+
+.la-glow {
+  text-shadow: 0 0 10px rgba(64, 224, 208, 0.4);
+}
+
+.la-heading {
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.la-sub {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: #A2ACB8;
+}
+
+.la-tabular {
+  font-variant-numeric: tabular-nums;
+  font-family: monospace;
+}
+
+/* Leave a substantial view of the environment around readable, bounded panels. */
+.la-scene-panel {
+  max-height: 78svh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+[data-reduced-motion="true"] .la-scene-panel {
+  max-height: none;
+  overflow: visible;
+}
+@media (max-width: 767px) {
+  .la-frame[data-frame]:not([data-frame="title"]):not([data-frame="grab"]):not([data-frame="nodes"]) {
+    align-items: flex-end;
+    padding-bottom: 3.5rem;
+  }
+  .la-scene-panel {
+    max-height: 63svh;
+  }
+}

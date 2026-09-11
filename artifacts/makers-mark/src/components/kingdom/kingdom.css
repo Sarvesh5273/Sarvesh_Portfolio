@@ -1,0 +1,441 @@
+/* The Buried Kingdom: stone, sediment, bronze, torchlight. */
+
+.k-act {
+  --k-umber: #3b2a1e;
+  --k-moss: #4f5f3a;
+  --k-verdigris: #6fa893;
+  --k-gold: #c9a35a;
+  --k-bronze: #8a6a3b;
+  --k-bronze-light: #c39a5c;
+  --k-stone: #6b5f55;
+  --k-stone-lit: #857567;
+  --k-stone-dark: #2a231e;
+  --k-dust: #d9cfbf;
+  --tx: 50%;
+  --ty: 45%;
+  color: var(--k-dust);
+  background-color: #14110e;
+}
+
+.k-video-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 35%, rgba(8, 5, 3, 0.58) 100%),
+    linear-gradient(180deg, rgba(10, 7, 5, 0.18), rgba(10, 7, 5, 0.4));
+}
+.k-story-frame {
+  width: min(94vw, 1280px);
+  margin-inline: auto;
+  padding-inline: 1rem;
+  min-height: min(62vh, 37rem);
+  display: flex;
+  align-items: center;
+}
+.k-story-frame.k-structure-left { justify-content: flex-end; }
+.k-story-frame.k-structure-right { justify-content: flex-start; }
+.k-copy-scrim {
+  position: relative;
+  width: min(100%, 34rem);
+  padding: clamp(.9rem, 2vw, 1.5rem);
+  background: radial-gradient(ellipse at center, rgba(15,10,7,.72) 0%, rgba(18,12,8,.5) 55%, transparent 82%);
+  text-shadow: 0 2px 10px rgba(0,0,0,.9);
+}
+.k-story-frame.k-structure-left .k-copy-scrim {
+  background: radial-gradient(ellipse at center, rgba(15,10,7,.72) 0%, rgba(18,12,8,.5) 55%, transparent 82%);
+}
+.k-frame-meta { margin-bottom: .8rem; }
+.k-frame-kicker { color: #ead7b8; opacity: 1; }
+.k-paper-records { padding-left: .35rem; }
+.k-interaction-note {
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.52));
+}
+.k-image-action {
+  position: relative;
+  z-index: 2;
+  padding: .55rem .8rem;
+  color: #eadcc4;
+  background: rgba(18,12,8,.8);
+  border: 1px solid rgba(201,163,90,.55);
+  font: 500 10px var(--app-font-inscription);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.k-tree-target {
+  height: 2.4rem;
+  flex: 1;
+  border: 1px solid transparent;
+  background: rgba(111,168,147,.08);
+}
+.k-tree-target:hover, .k-tree-target:focus-visible { border-color: rgba(201,163,90,.8); outline: none; }
+.k-plaque {
+  color: #f1e3c6;
+  background-color: #6b5230;
+  background-image: linear-gradient(180deg, rgba(255, 236, 205, 0.08), rgba(0, 0, 0, 0.25)), var(--k-bronze-img, none);
+  background-size: cover, 256px 256px;
+  background-blend-mode: normal, multiply;
+  box-shadow: inset 0 1px 0 rgba(255, 236, 205, 0.18), inset 0 -1px 0 rgba(0, 0, 0, 0.5), 0 6px 14px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- torch ---------- */
+.k-torch-dark {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 48vmax at var(--tx) var(--ty),
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.28) 32%,
+    rgba(6, 4, 3, 0.86) 100%
+  );
+}
+.k-torch-warm {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    circle 30vmax at var(--tx) var(--ty),
+    rgba(255, 176, 92, 0.22) 0%,
+    rgba(214, 140, 70, 0.1) 40%,
+    rgba(0, 0, 0, 0) 72%
+  );
+}
+@keyframes k-flicker {
+  0%, 100% { opacity: 1; }
+  23% { opacity: 0.92; }
+  41% { opacity: 0.97; }
+  57% { opacity: 0.88; }
+  76% { opacity: 0.95; }
+}
+.k-act[data-torch='follow'] .k-torch-warm {
+  animation: k-flicker 3.4s steps(1, end) infinite;
+}
+/* Touch devices (and reduced motion): static, full light. */
+.k-act[data-torch='static'] .k-torch-dark {
+  background: radial-gradient(ellipse 80% 70% at 50% 45%, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.55) 100%);
+}
+.k-act[data-torch='static'] .k-torch-warm {
+  background: radial-gradient(ellipse 60% 50% at 50% 42%, rgba(255, 176, 92, 0.14) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+/* ---------- carved typography ---------- */
+.k-inscription {
+  font-family: var(--app-font-inscription);
+  letter-spacing: 0.08em;
+}
+/* Lines cut into dark stone: the torch catches the lower lip of each groove. */
+.k-carved {
+  font-family: var(--app-font-inscription);
+  letter-spacing: 0.06em;
+  color: #e4d6bd;
+  text-shadow:
+    0 -1px 0 rgba(0, 0, 0, 0.95),
+    -1px 0 0 rgba(0, 0, 0, 0.7),
+    0 1px 0 rgba(255, 240, 210, 0.18),
+    0 0 12px rgba(0, 0, 0, 0.5);
+}
+.k-carved-light {
+  font-family: var(--app-font-inscription);
+  letter-spacing: 0.1em;
+  color: #e8d5b8;
+  text-shadow:
+    -1px -1px 0 rgba(0, 0, 0, 0.85),
+    1px 1px 0 rgba(255, 236, 205, 0.16),
+    0 1px 8px rgba(0, 0, 0, 0.85);
+}
+.k-struck {
+  position: relative;
+  color: #a79a86;
+  opacity: 0.8;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.9);
+}
+.k-struck::after {
+  content: '';
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  top: 52%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(228, 214, 189, 0.55) 12%, rgba(228, 214, 189, 0.55) 88%, transparent);
+  transform: rotate(-1.2deg);
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.9);
+}
+
+/* ---------- stone surfaces ---------- */
+.k-stone-backing {
+  position: absolute;
+  inset: -15% -10%;
+  width: 120%;
+  height: 130%;
+  z-index: -1;
+  pointer-events: none;
+  object-fit: fill;
+  filter: drop-shadow(-15px 15px 30px rgba(0,0,0,0.85)) drop-shadow(-5px 5px 10px rgba(0,0,0,0.6));
+}
+.k-stone-backing-dark {
+  filter: drop-shadow(-10px 10px 20px rgba(0,0,0,0.9)) brightness(0.4) contrast(1.3);
+  inset: -10% -5%;
+  width: 110%;
+  height: 120%;
+}
+.k-stone-backing-alt {
+  transform: scaleX(-1) rotate(1deg);
+  filter: drop-shadow(15px 15px 30px rgba(0,0,0,0.85)) drop-shadow(5px 5px 10px rgba(0,0,0,0.6));
+}
+
+/* ---------- manuscript setup ---------- */
+
+
+
+/* Faded ink text styling */
+.k-ink-text {
+  color: #1d0d05;
+  mix-blend-mode: normal;
+  text-shadow: none;
+  font-family: var(--app-font-inscription);
+  font-weight: 500;
+}
+.k-ink-title {
+  color: #120804;
+  mix-blend-mode: normal;
+  text-shadow: none;
+  font-family: var(--app-font-inscription);
+  font-weight: 700;
+}
+.k-ink-gloss {
+  color: #281307;
+  mix-blend-mode: normal;
+  text-shadow: none;
+  font-weight: 500;
+}
+.k-ledger-prior .k-ink-text { color: #2d1608; }
+.k-ledger-prior .k-struck { color: #4a2a18; opacity: .9; }
+.k-ledger-sheet { isolation: isolate; }
+.k-ledger-seal { opacity: .94; transform: rotate(-5deg); }
+
+
+/* Faded ink handprint */
+.k-handprint-ink {
+  width: 100%;
+  height: 100%;
+  opacity: 0.45;
+  color: #2c1e16;
+  mix-blend-mode: multiply;
+  transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+  filter: drop-shadow(0 1px 1px rgba(255,255,255,0.1));
+}
+
+
+
+
+
+.k-manuscript-row {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  padding: .46rem 0;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.k-manuscript-row:hover .k-line {
+  transform: translateX(4px);
+  font-weight: bold;
+  opacity: 1;
+}
+
+.k-manuscript-row:focus-visible .k-line {
+  transform: translateX(4px);
+  text-decoration: underline;
+  text-decoration-color: rgba(44, 30, 22, 0.4);
+  text-underline-offset: 4px;
+}
+
+.k-manuscript-row .k-line {
+  display: block;
+  font-size: .86rem;
+  line-height: 1.28;
+  opacity: .92;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), font-weight 0.4s ease, opacity 0.4s ease;
+}
+
+.k-manuscript-row[aria-expanded='true'] .k-line {
+  font-weight: bold;
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.k-manuscript-row .k-gloss {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 700ms cubic-bezier(0.4, 0, 0.2, 1), opacity 600ms ease, margin 500ms ease;
+  font-size: .7rem;
+  line-height: 1.35;
+  color: #3b2416;
+  text-shadow: none;
+}
+
+.k-manuscript-row[aria-expanded='true'] .k-gloss,
+.k-manuscript-row:hover .k-gloss,
+.k-act[data-reduced-motion] .k-manuscript-row .k-gloss {
+  max-height: 8rem;
+  opacity: 0.9;
+  margin-top: .35rem;
+}
+
+
+
+
+
+/* ---------- side halls ---------- */
+.k-hall {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  text-align: center;
+  transition: opacity 900ms ease, transform 900ms ease;
+}
+.k-hall-wrap {
+  padding: .7rem;
+  background: linear-gradient(180deg, rgba(31,21,15,.9), rgba(13,9,7,.74));
+}
+.k-hall-arch {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  width: 5rem;
+  height: 5.8rem;
+  margin-inline: auto;
+  padding: .5rem;
+  border: .55rem solid #5a4b3f;
+  border-bottom: 0;
+  border-radius: 3rem 3rem 0 0;
+  background: #090604;
+  box-shadow: inset 0 0 24px rgba(0,0,0,.9), 0 8px 24px rgba(0,0,0,.5);
+  perspective: 180px;
+}
+.k-hall-leaf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #2d2119, #493628);
+  transform-origin: left center;
+  transition: transform 900ms ease, opacity 700ms ease;
+}
+.k-hall[data-open='true'] .k-hall-leaf { transform: rotateY(-68deg); opacity: .45; }
+.k-hall[data-lit='false'] {
+  opacity: 0.34;
+}
+.k-hall[data-lit='true'] {
+  opacity: 0.85;
+}
+.k-hall[data-open='true'] {
+  opacity: 1;
+}
+.k-hall:focus-visible .k-hall-door {
+  filter: drop-shadow(0 0 6px rgba(255, 190, 110, 0.7));
+}
+.k-hall-door {
+  transition: transform 1200ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity 900ms ease;
+}
+.k-hall[data-open='true'] .k-hall-door-leaf {
+  transform: perspective(300px) rotateY(-70deg);
+  opacity: 0.5;
+}
+.k-hall-door-leaf {
+  transform-origin: left center;
+  transition: transform 1400ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity 900ms ease;
+}
+
+/* ---------- unfinished carving ---------- */
+.k-chisel {
+  position: absolute;
+  width: 7rem;
+  height: 2.5rem;
+  transform: translate(-.7rem, -50%) rotate(26deg);
+  display: flex;
+  align-items: center;
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+}
+.k-chisel:active {
+  cursor: grabbing;
+}
+.k-chisel:focus-visible {
+  filter: drop-shadow(0 0 5px rgba(255, 200, 120, 0.9));
+}
+.k-chisel-blade {
+  width: 2.5rem;
+  height: .5rem;
+  background: linear-gradient(180deg, #eee9df, #77736d);
+  clip-path: polygon(0 50%, 28% 0, 100% 20%, 100% 80%, 28% 100%);
+}
+.k-chisel-handle {
+  width: 3.9rem;
+  height: .85rem;
+  border-radius: .3rem;
+  background: linear-gradient(180deg, #765438, #2f2017);
+  box-shadow: 0 3px 4px rgba(0,0,0,.55);
+}
+.k-carving-canvas {
+  height: clamp(12rem, 29vw, 17rem);
+}
+.k-chisel:focus-visible .k-chisel-blade {
+  filter: drop-shadow(0 0 5px rgba(255, 200, 120, 0.9));
+}
+@keyframes k-refract {
+  0% { opacity: 0; transform: translateX(-30%) skewX(-12deg); }
+  30% { opacity: 0.85; }
+  100% { opacity: 0; transform: translateX(130%) skewX(-12deg); }
+}
+.k-refract {
+  position: absolute;
+  inset: -10%;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 120, 140, 0.35) 22%,
+    rgba(255, 220, 140, 0.55) 38%,
+    rgba(140, 255, 210, 0.55) 52%,
+    rgba(140, 180, 255, 0.5) 66%,
+    transparent 100%
+  );
+}
+.k-refracting .k-refract {
+  animation: k-refract 1500ms cubic-bezier(0.6, 0.05, 0.3, 1) forwards;
+}
+.k-refracting .k-carving-stone {
+  transition: filter 1600ms ease, opacity 1600ms ease;
+  filter: saturate(1.3) brightness(1.35) blur(0.6px);
+}
+.k-act[data-reduced-motion] .k-refract {
+  animation: none;
+}
+
+.k-frame[inert] {
+  visibility: hidden;
+}
+
+
+/* Small screens: pinned scenes stay within the viewport rather than inner-scrolling. */
+@media (max-width: 767px) {
+  .k-story-frame { width: 100%; align-items: flex-end; padding-inline: 0; }
+  .k-copy-scrim { max-width: none; padding: .65rem; }
+  .k-hall-arch { width: 3.6rem; height: 4.2rem; border-width: .38rem; }
+  .k-hall-wrap { padding: .35rem; }
+  .k-carving-canvas { height: 11rem; }
+
+
+  .k-manuscript-row .k-line { font-size: .72rem; line-height: 1.25; }
+}
