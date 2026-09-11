@@ -7,25 +7,15 @@ import runtimeErrorOverlay from '@replit/vite-plugin-runtime-error-modal';
 
 const rawPort = process.env.PORT;
 
-if (!rawPort) {
-  throw new Error(
-    'PORT environment variable is required but was not provided.',
-  );
-}
-
-const port = Number(rawPort);
+const port = rawPort ? Number(rawPort) : 5173;
 
 if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
-const basePath = process.env.BASE_PATH;
-
-if (!basePath) {
-  throw new Error(
-    'BASE_PATH environment variable is required but was not provided.',
-  );
-}
+// Replit provides these for the proxied development preview. Static hosts such
+// as Vercel do not, and Vite's root defaults are the correct build behaviour.
+const basePath = process.env.BASE_PATH || '/';
 
 // Absolute origin for canonical / Open Graph URLs in index.html (%VITE_SITE_URL%).
 // Explicit VITE_SITE_URL wins; inside a Replit deployment build REPLIT_DOMAINS
