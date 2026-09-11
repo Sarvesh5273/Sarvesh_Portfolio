@@ -34,7 +34,25 @@ const EVICT = 36;
 const COARSE = 12;
 const WORKERS = 4;
 
-function pickWidth() {
+const HEAVY_SEQUENCE_TUNING = {
+  initialBuffer: 12,
+  aheadWindow: 14,
+  behindWindow: 4,
+  evict: 20,
+  coarse: 16,
+  workers: 2,
+} as const;
+
+const STANDARD_TUNING = {
+  initialBuffer: INITIAL_BUFFER,
+  aheadWindow: AHEAD_WINDOW,
+  behindWindow: BEHIND_WINDOW,
+  evict: EVICT,
+  coarse: COARSE,
+  workers: WORKERS,
+} as const;
+
+function pickWidth(preferCompactFrames: boolean) {
   if (typeof window === 'undefined') return 1600;
   const navigatorWithHints = navigator as Navigator & {
     connection?: { saveData?: boolean };
@@ -46,7 +64,10 @@ function pickWidth() {
     (navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency <= 4);
   if (lowerPowerDevice) return 800;
   const need = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2);
-  return need <= 900 ? 800 : 1600;
+  // Long cinematic plates can otherwise ask a compact high-DPR display to decode
+  // 1600px imagery on every scroll beat. The 800px render is enough at this size
+  // and keeps scroll work responsive; large displays retain the detailed source.
+  return need <= (preferCompactFrames ? 1280 : 900) ? 800 : 1600;
 }
 
 export function frameUrl(name: string, width: number, index: number) {
@@ -70,6 +91,7 @@ export const FramePlate = forwardRef<FramePlateHandle, Props>(function FramePlat
   { name, count, className, initial = 0, onReady, onBuffered },
   ref,
 ) {
+  const tuning = count > 200 ? HEAVY_SEQUENCE_TUNING : STANDARD_TUNING;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const cacheRef = useRef<Map<number, HTMLImageElement>>(new Map());
   const pendingRef = useRef<Set<number>>(new Set());
@@ -132,7 +154,7 @@ export const FramePlate = forwardRef<FramePlateHandle, Props>(function FramePlat
     const cache = cacheRef.current;
     for (const [i, img] of cache) {
       if (i === c) continue;
-      const far = Math.abs(i - c) > EVICT && i % COARSE !== 0;
+      const far = Math.abs(i - c) > tuning.evict && i % tuning.coarse !== 0;
       if (far || !onScreenRef.current) {
         img.src = '';
         cache.delete(i);
@@ -154,7 +176,7 @@ export const FramePlate = forwardRef<FramePlateHandle, Props>(function FramePlat
       readyRef.current = true;
       onReady?.();
     }
-    const openingCount = Math.min(INITIAL_BUFFER, count);
+    const openingCount = Math.min(tuning.initialBuffer, count);
     if (!bufferedRef.current && settledRef.current.size >= openingCount) {
       bufferedRef.current = true;
       onBuffered?.();
@@ -189,24 +211,24 @@ export const FramePlate = forwardRef<FramePlateHandle, Props>(function FramePlat
     const pending = pendingRef.current;
     const free = (i: number) => i >= 0 && i < count && !cache.has(i) && !pending.has(i);
     if (!bufferedRef.current) {
-      for (let i = 0; i < Math.min(INITIAL_BUFFER, count); i++) if (free(i)) return i;
+      for (let i = 0; i < Math.min(tuning.initialBuffer, count); i++) if (free(i)) return i;
     }
     if (free(c)) return c;
     if (!onScreenRef.current) return null;
-    for (let d = 1; d <= AHEAD_WINDOW; d++) {
+    for (let d = 1; d <= tuning.aheadWindow; d++) {
       const i = c + d * directionRef.current;
       if (free(i)) return i;
     }
-    for (let d = 1; d <= BEHIND_WINDOW; d++) {
+    for (let d = 1; d <= tuning.behindWindow; d++) {
       const i = c - d * directionRef.current;
       if (free(i)) return i;
     }
-    for (let i = 0; i < count; i += COARSE) if (free(i)) return i;
+    for (let i = 0; i < count; i += tuning.coarse) if (free(i)) return i;
     return null;
   };
 
   const pump = () => {
-    while (workersRef.current < WORKERS) {
+    while (workersRef.current < tuning.workers) {
       const i = nextToLoad();
       if (i === null) return;
       pendingRef.current.add(i);
@@ -242,7 +264,7 @@ export const FramePlate = forwardRef<FramePlateHandle, Props>(function FramePlat
     readyRef.current = false;
     bufferedRef.current = false;
     settledRef.current = new Set();
-    widthRef.current = pickWidth();
+    widthRef.current = pickWidth(count > 200);
     cacheRef.current = new Map();
     pendingRef.current = new Set();
     currentRef.current = initial;
