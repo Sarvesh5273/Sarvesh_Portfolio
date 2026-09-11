@@ -59,7 +59,9 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname),
   build: {
-    outDir: path.resolve(import.meta.dirname, 'dist/public'),
+    // Vercel's Vite preset serves the standard dist directory. Replit's
+    // development workflow does not depend on the production output folder.
+    outDir: path.resolve(import.meta.dirname, 'dist'),
     emptyOutDir: true,
   },
   server: {
